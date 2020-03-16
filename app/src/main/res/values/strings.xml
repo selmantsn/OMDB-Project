@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">omdb_android_project</string>
+    <string name="edit_hint_text">Filmin adını yazınız</string>
+    <string name="no_data_text">Aramak istediğiniz filmin adını yukarıdaki alana yazıp arama butonuna basınız</string>
+</resources>
