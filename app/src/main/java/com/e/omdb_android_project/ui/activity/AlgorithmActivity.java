@@ -1,6 +1,7 @@
 package com.e.omdb_android_project.ui.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -40,35 +41,15 @@ public class AlgorithmActivity extends BaseActivity {
         setContentView(R.layout.activity_algorithm);
         ButterKnife.bind(this);
 
-
         editStringData.setText(data);
 
         btnRun.setOnClickListener(v -> {
-            runReplace(editStringData.getText().toString(), Integer.parseInt(editNValue.getText().toString()));
-
+            tvResult.setText(runRegexJ(editStringData.getText().toString(), Integer.parseInt(editNValue.getText().toString())));
         });
 
-        //run(data, n);
     }
 
-    private void run(String data, int nCount) {
-        StringBuilder sbData = new StringBuilder(data);
-        List<Integer> indexList = new ArrayList<>();
 
-        for (int i = 0; i < sbData.length() - 1; i++) {
-            if (sbData.charAt(i) == sbData.charAt(i + 1)) {
-                indexList.add(i);
-            } else {
-                if (indexList.size() >= nCount) {
-                    for (int j = 0; j < indexList.size(); j++) {
-                        sbData.setCharAt(indexList.get(j), '*');
-                    }
-                    indexList.clear();
-                }
-            }
-        }
-        System.out.println(sbData);
-    }
 
 
     private void runReplace(String data, int n) {
@@ -109,6 +90,35 @@ public class AlgorithmActivity extends BaseActivity {
     }
 
 
+    private String runRegexJ(String data, int n) {
+
+        String[] stringArray = data.split("(?<=(.))(?!\\1|$)");
+        String newString = new String();
+
+
+        for (int i = 0; i < stringArray.length; i++) {
+            Log.i("TAGF", "runRegexJ: " + stringArray[i]);
+            if (stringArray[i].length() >= n) {
+                newString += repeater(stringArray[i].length());
+            } else {
+                newString += stringArray[i];
+            }
+        }
+        return newString;
+    }
+
+
+    //Kullanılan java versiyonunda repeat fonksiyonu olmadı için kullanıldı
+    private String repeater(int length) {
+        Log.i("TAGF", "length: " + length);
+        String empty = new String();
+        for (int i = 0; i < length; i++) {
+            empty += "*";
+
+        }
+        Log.i("TAGF", "Empty : repeater: " + empty);
+        return empty;
+    }
 
 
 }
